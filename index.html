@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B9N9911MNC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B9N9911MNC');
+  </script>
+  
+  <meta charset="utf-8">
+  <meta name="description"
+        content="VecVideo: Towards Text-Guided SVG Animation Generation">
+  <meta name="keywords" content="SVG, Animation, Text-to-video, Vector Graphics">
+  <meta name="viewport" content="width=device-width, initial-scale=0.1">
+  <title>VecVideo: Towards Text-Guided SVG Animation Generation</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-tooltip.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+  
+<!--Title block-->
+<section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop" id="top">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">VecVideo: Towards Text-Guided SVG Animation Generation</h1>
+              <br>        
+
+              <div class="columns is-centered has-text-centered is-variable is-8">
+              <div class="column is-three-quarters is-centered has-text-centered">
+                <div class="publication-links ">
+    
+                <span class="link-block">
+                  <a href="#abstract"
+                      class="nav-link button-55 is-normal">
+                    <span>Abstract</span>
+                    </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#pipeline"
+                      class="nav-link button-55 is-normal">
+                    <span>How dose it work?</span>
+                    </a>
+                </span>
+                
+                <span class="link-block">
+                  <a href="#gallery"
+                      class="nav-link button-55 is-normal">
+                    <span>Gallery</span>
+                    </a>
+                </span>
+    
+                <span class="link-block">
+                  <a href="#svg_comparisons1"
+                     class="nav-link button-55 is-normal">
+                    <span>SVG Animation Comparisons(first stage)</span>
+                    </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#svg_comparisons2"
+                     class="nav-link button-55 is-normal">
+                    <span>SVG Animation Comparisons(second stage)</span>
+                    </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#sketch_comparisons"
+                     class="nav-link button-55 is-normal">
+                    <span>Sketch Animation Comparisons</span>
+                    </a>
+                </span>
+    
+                <span class="link-block">
+                  <a href="#ablation"
+                     class="nav-link button-55 is-normal">
+                    <span>Ablation</span>
+                    </a>
+                </span>  
+                
+              </div>
+    
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- Abstract. -->
+<section class="section">
+  <div class="container is-widescreen" id="abstract">
+    <div class="link-block ">
+      <a href="#top"
+          class="nav-link button-55 is-normal">
+        <span>Go to Top</span>
+        </a>
+    </div>
+    <div class="section-title has-text-centered is-centered">
+      <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+      <h2 class="title is-3">Abstract</h2><br>
+        <div class="content has-text-justified">
+        <p>
+          Due to the scalability and editability, Scalable Vector Graphic (SVG) animation is widely used for applications ranging from web development to interactive design. 
+          However, SVG animations typically involve specifying transformations (e.g., translate, rotate, scale) for each element in the animation. This requires manually adjusting these properties for every frame or key moment in the animation, which can be time-consuming, especially for complex sequences. 
+          In this paper, we propose VecVideo, a text-guided method for generating SVG animations. 
+          VecVideo decomposes the animation generation process into two tasks: motion prediction and color prediction. 
+          For motion, VecVideo first samples a set of sparse control points and predicts their motion. Second, the motion of other points is propagated based on the predicted motion of the sparse control points. 
+          Third, to ensure motion coherence, a cross-frame consistency loss is applied to the motion of paths (which consist of multiple points). 
+          For color, VecVideo predicts the changes in path colors over time. 
+          After the two steps, a pre-trained text-to-video diffusion model is used to guide the motion and color prediction. 
+          Extensive experiments demonstrate the effectiveness and efficiency of our method, including qualitative and quantitative evaluations. We also showcase a few potential applications of VecVideo.  
+          The code has been submitted as supplementary material and will be made publicly available.
+        </p>
+        </div>
+    </div>
+  </div>
+</div>
+  </div>
+</section>
+
+<!-- How does it work? -->
+<section class="section">
+  <div class="container is-widescreen" id="pipeline">
+    <div class="link-block ">
+      <a href="#top"
+          class="nav-link button-55 is-normal">
+        <span>Go to Top</span>
+        </a>
+    </div>
+    <div class="section-title has-text-centered is-centered">
+      <h2 class="title is-3">How dose it work?</h2><br>
+    </div>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+      <img id="rep" src="static/images/method/pipeline.png"/>
+      <div class="content has-text-justified">
+        VecVideo is an optimization-based model to generate text-guided SVG animation. It decomposes the generation process into two tasks: motion prediction and color prediction. For motion prediction, this approach use a FPS to sample a set of sparse control points and predict their motion. We then compute the motion of other points by their neighboring sparse control points. For color predict, we predict the color attribute for each path. Finally, we use a pre-trained text-to-video model to optimize both stages.
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<!--Gallery-->
+<section class="section">
+  <div class="container is-widescreen" id="gallery">
+    <div class="link-block ">
+      <a href="#top"
+          class="nav-link button-55 is-normal">
+        <span>Go to Top</span>
+        </a>
+    </div>
+    <div class="section-title has-text-centered is-centered">
+      <h2 class="title is-3">Gallery</h2><br>
+    </div>
+    <div class="container is-max-desktop is-centered has-text-centered">
+      <div class="gallery">
+        
+        <div class="captioned_video">
+          <div class="inner_gallery">
+            <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/1.png" alt="butterfly"/>
+            <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/1.gif" alt="butterfly"/>
+          </div>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="A butterfly fluttering its wings and flying gracefully." title="">A butterfly fluttering its wings [..]</h6>
+        </div>
+
+        <div class="captioned_video">
+          <div class="inner_gallery">
+            <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/2.png" alt="kite"/>
+            <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/2.gif" alt="kite"/>
+          </div>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="A kite fluttering in the sky." title="">A kite fluttering in the sky.</h6>
+        </div>
+
+        <div class="captioned_video">
+          <div class="inner_gallery">
+            <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/3.png" alt="airplane"/>
+            <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/3.gif" alt="airplane"/>
+          </div>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="The airplane moves swiftly and steadily through the air." title="">The airplane moves swiftly and steadily [..]</h6>
+        </div>
+      
+        <div class="captioned_video">
+          <div class="inner_gallery">
+            <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/4.png" alt="balloon"/>
+            <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/4.gif" alt="balloon"/>
+          </div>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="A hot air balloon rising in the sky." title="">A hot air balloon rising in the sky.</h6>
+        </div>
+
+        <div class="captioned_video">
+          <div class="inner_gallery">
+            <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/5.png" alt="ship"/>
+            <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/5.gif" alt="ship"/>
+          </div>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="A ship moves swiftly and steadily on the sea." title="">A ship moves swiftly and steadily on the sea.</h6>
+        </div>
+
+        <div class="captioned_video">
+          <div class="inner_gallery">
+            <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/6.png" alt="cloud"/>
+            <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/6.gif" alt="cloud"/>
+          </div>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="A cloud floating in the sky." title="">A cloud floating in the sky.</h6>
+        </div>
+        
+        <div class="captioned_video">
+          <div class="inner_gallery">
+            <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/7.png" alt="fish"/>
+            <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/7.gif" alt="fish"/>
+          </div>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="The fish is gracefully moving through the water, its fins and tail fin gently propelling it forward with effortless agility." title="">The fish is gracefully moving through [..]</h6>
+        </div>
+
+        <div class="captioned_video">
+          <div class="inner_gallery">
+            <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/8.png" alt="spaceship"/>
+            <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/8.gif" alt="spaceship"/>
+          </div>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="The spaceship accelerates rapidly during takeoff, utilizing powerful rocket engines." title="">The spaceship accelerates rapidly [..]</h6>
+        </div>
+
+        <div class="captioned_video">
+          <div class="inner_gallery">
+            <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/9.png" alt="medusa"/>
+            <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/9.gif" alt="medusa"/>
+          </div>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="The medusa is gracefully moving through the water, its tentacles swinging briskly." title="">The medusa is gracefully moving [..]</h6>
+        </div>
+
+        <div class="captioned_video">
+          <div class="inner_gallery">
+            <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/10.png" alt="bird"/>
+            <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/10.gif" alt="bird"/>
+          </div>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="The bird soars majestically, with powerful wing beats and effortless glides." title="">The bird soars majestically [..]</h6>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SVG Comparisons1 -->
+<section class="section hero is-light">
+  <div class="container is-widescreen" id="svg_comparisons1">
+    <div class="link-block ">
+      <a href="#top"
+          class="nav-link button-55 is-normal">
+        <span>Go to Top</span>
+        </a>
+    </div>
+    <div class="section-title has-text-centered is-centered">
+      <h2 class="title is-3">SVG Animation Comparisons(first stage)</h2><br>
+    </div>
+    <div class="section is-centered has-text-centered">
+      We evaluate the results from the first stage of our method with Live-Sketch.
+      Live-Sketch relies on a global transformation matrix to generate the primary motion, which often results in both the background and the main subject moving together in the generated videos.
+      However, our method effectively overcomes this limitation by employing sparse control points, ensuring smoother and more natural motion. 
+      Below we provide the videos used in our quantitative experiement.
+    </div>
+    
+    <div id="results-carousel" class="carousel results-carousel">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/color_pngs/1.png" alt="111"/>
+         <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/live_color_gif/1.gif" alt="111"/>
+         <h6 class="caption">Live-Sketch</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_color_1_gif/1.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/color_pngs/2.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_color_gif/2.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_color_1_gif/2.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/color_pngs/3.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_color_gif/3.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_color_1_gif/3.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/color_pngs/4.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_color_gif/4.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_color_1_gif/4.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/color_pngs/5.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_color_gif/5.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_color_1_gif/5.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/color_pngs/6.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_color_gif/6.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_color_1_gif/6.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/color_pngs/7.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_color_gif/7.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_color_1_gif/7.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/color_pngs/8.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_color_gif/8.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_color_1_gif/8.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/color_pngs/9.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_color_gif/9.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_color_1_gif/9.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/color_pngs/10.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_color_gif/10.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_color_1_gif/10.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- SVG Comparisons2 -->
+<section class="section hero is-light">
+  <div class="container is-widescreen" id="svg_comparisons2">
+    <div class="link-block ">
+      <a href="#top"
+          class="nav-link button-55 is-normal">
+        <span>Go to Top</span>
+        </a>
+    </div>
+    <div class="section-title has-text-centered is-centered">
+      <h2 class="title is-3">SVG Animation Comparisons(second stage)</h2><br>
+    </div>
+    <div class="section is-centered has-text-centered">
+      For the second part, SVD, VideoCrafter2, and DynamiCrafter256 struggle to maintain the appearance of the main subject during the process.
+      Although DynamiCrafter512 effectively preserves the appearance of the main subject, its motion is limited, often only involving minimal translation.
+      In contrast, our method achieves a balance between image consistency and motion quality.
+      Below we provide the videos used in our quantitative experiement.
+    </div>
+    
+    <div id="results-carousel" class="carousel results-carousel">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/svd_color_gif/1.gif" alt="111"/>
+         <h6 class="caption">SVD</h6>
+        </div>
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/vc_color_gif/1.gif" alt="111"/>
+         <h6 class="caption">VideoCrafter2</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy_color_gif/1.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter256</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy512_color_gif/1.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter512</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_gif/1.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/svd_color_gif/2.gif" alt="111"/>
+         <h6 class="caption">SVD</h6>
+        </div>
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/vc_color_gif/2.gif" alt="111"/>
+         <h6 class="caption">VideoCrafter2</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy_color_gif/2.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter256</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy512_color_gif/2.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter512</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_gif/2.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/svd_color_gif/3.gif" alt="111"/>
+         <h6 class="caption">SVD</h6>
+        </div>
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/vc_color_gif/3.gif" alt="111"/>
+         <h6 class="caption">VideoCrafter2</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy_color_gif/3.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter256</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy512_color_gif/3.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter512</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_gif/3.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/svd_color_gif/4.gif" alt="111"/>
+         <h6 class="caption">SVD</h6>
+        </div>
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/vc_color_gif/4.gif" alt="111"/>
+         <h6 class="caption">VideoCrafter2</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy_color_gif/4.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter256</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy512_color_gif/4.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter512</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_gif/4.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+  
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/svd_color_gif/5.gif" alt="111"/>
+         <h6 class="caption">SVD</h6>
+        </div>
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/vc_color_gif/5.gif" alt="111"/>
+         <h6 class="caption">VideoCrafter2</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy_color_gif/5.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter256</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy512_color_gif/5.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter512</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_gif/5.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/svd_color_gif/6.gif" alt="111"/>
+         <h6 class="caption">SVD</h6>
+        </div>
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/vc_color_gif/6.gif" alt="111"/>
+         <h6 class="caption">VideoCrafter2</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy_color_gif/6.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter256</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy512_color_gif/6.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter512</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_gif/6.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/svd_color_gif/7.gif" alt="111"/>
+         <h6 class="caption">SVD</h6>
+        </div>
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/vc_color_gif/7.gif" alt="111"/>
+         <h6 class="caption">VideoCrafter2</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy_color_gif/7.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter256</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy512_color_gif/7.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter512</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_gif/7.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/svd_color_gif/8.gif" alt="111"/>
+         <h6 class="caption">SVD</h6>
+        </div>
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/vc_color_gif/8.gif" alt="111"/>
+         <h6 class="caption">VideoCrafter2</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy_color_gif/8.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter256</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy512_color_gif/8.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter512</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_gif/8.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/svd_color_gif/9.gif" alt="111"/>
+         <h6 class="caption">SVD</h6>
+        </div>
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/vc_color_gif/9.gif" alt="111"/>
+         <h6 class="caption">VideoCrafter2</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy_color_gif/9.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter256</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy512_color_gif/9.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter512</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_gif/9.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/svd_color_gif/10.gif" alt="111"/>
+         <h6 class="caption">SVD</h6>
+        </div>
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/vc_color_gif/10.gif" alt="111"/>
+         <h6 class="caption">VideoCrafter2</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy_color_gif/10.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter256</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/dy512_color_gif/10.gif" alt="111"/>
+          <h6 class="caption">DynamiCrafter512</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_gif/10.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- Sketch Comparison -->
+<section class="section hero is-light">
+  <div class="container is-widescreen" id="sketch_comparisons">
+    <div class="link-block ">
+      <a href="#top"
+          class="nav-link button-55 is-normal">
+        <span>Go to Top</span>
+        </a>
+    </div>
+    <div class="section-title has-text-centered is-centered">
+      <h2 class="title is-3">Sketch Animation Comparision</h2><br>
+    </div>
+    <div class="section is-centered has-text-centered">
+      For sketch animation, we mainly compare our method with the previous sketch-to-video method, Live-Sketch. 
+      Additionally, we incorporate comparisons with recent video generation approaches:
+      (1) SVD is an image-to-video model that takes an image and generates the corresponding video content.
+      (2) VideoCrafter2, a video generation model conditioned on images and text prompts. 
+      (3) DynamiCrafter, a model for high-quality video generation, also conditioned on images and text prompts. 
+      Below we provide the videos used in our quantitative experiement.
+    </div>
+    
+    <div id="results-carousel" class="carousel results-carousel">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/sketch_pngs/1.png" alt="111"/>
+         <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/live_sketch_gif/1.gif" alt="111"/>
+         <h6 class="caption">Live-Sketch</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/1.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/2.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/2.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/2.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/3.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/3.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/3.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/4.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/4.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/4.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/5.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/5.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/5.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/6.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/6.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/6.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/7.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/7.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/7.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/8.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/8.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/8.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/9.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/9.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/9.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/10.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/10.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/10.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+    
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/11.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/11.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/11.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/12.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/12.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/12.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/13.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/13.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/13.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/14.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/14.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/14.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/15.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/15.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/15.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/16.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/16.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/16.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/17.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/17.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/17.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/18.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/18.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/18.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/19.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/19.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/19.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/20.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/20.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/20.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/21.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/21.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/21.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/22.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/22.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/22.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/23.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/23.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/23.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/24.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/24.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/24.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/25.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/25.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/25.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/26.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/26.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/26.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/27.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/27.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/27.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/28.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/28.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/28.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="sstatic/images/sketch_pngs/29.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/29.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/29.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/sketch_pngs/30.png" alt="111"/>
+          <h6 class="caption">Input</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/live_sketch_gif/30.gif" alt="111"/>
+          <h6 class="caption">Live-Sketch</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/30.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+</section>
+
+<!-- Ablation -->
+<section class="section hero is-light">
+  <div class="container is-widescreen" id="ablation">
+    <div class="link-block ">
+      <a href="#top"
+          class="nav-link button-55 is-normal">
+        <span>Go to Top</span>
+        </a>
+    </div>
+    <div class="section-title has-text-centered is-centered">
+      <h2 class="title is-3">Ablation</h2><br>
+    </div>
+    <div class="section is-centered has-text-centered">
+      We validate our components through an ablation study in sketch animation, focusing on the SC-Vector and the CFC Loss.
+      Below we provide the videos used in our quantitative experiement.
+    </div>
+    
+    <div id="results-carousel" class="carousel results-carousel">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/no_cfc_gif/1.gif" alt="111"/>
+         <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+         <img class="comp_src_img" src="static/images/no_sparse_gif/1.gif" alt="111"/>
+         <h6 class="caption">w/o SC-Vector</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/1.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/2.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/2.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/2.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/3.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/3.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/3.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/4.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/4.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/4.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/5.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/5.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/5.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/6.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/6.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/6.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+    
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/7.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/7.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/7.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/8.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/8.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/8.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/9.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/9.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/9.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/10.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/10.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/10.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+    
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/11.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/11.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/11.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/12.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/12.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/12.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/13.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/13.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/13.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/14.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/14.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/14.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/15.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/15.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/15.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/16.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/16.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/16.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/17.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/17.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/17.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/18.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/18.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/18.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/19.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/19.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/19.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/20.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/20.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/20.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/21.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/21.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/21.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/22.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/22.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/22.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/23.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/23.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/23.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/24.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/24.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/24.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/25.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/25.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/25.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/26.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/26.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/26.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/27.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/27.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/27.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/28.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/28.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/28.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/29.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/29.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/29.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_cfc_gif/30.gif" alt="111"/>
+          <h6 class="caption">w/o CFC</h6>
+        </div>
+        <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/no_sparse_gif/30.gif" alt="111"/>
+          <h6 class="caption">w/o SC-Vector</h6>
+         </div>
+         <div class="captioned_video">
+          <img class="comp_src_img" src="static/images/NFSD_sketch_gif/30.gif" alt="111"/>
+          <h6 class="caption">Ours</h6>
+         </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+</section>
