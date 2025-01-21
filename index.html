@@ -60,7 +60,7 @@
                 <span class="link-block">
                   <a href="#pipeline"
                       class="nav-link button-55 is-normal">
-                    <span>How dose it work?</span>
+                    <span>Method</span>
                     </a>
                 </span>
                 
@@ -74,14 +74,14 @@
                 <span class="link-block">
                   <a href="#svg_comparisons1"
                      class="nav-link button-55 is-normal">
-                    <span>SVG Animation Comparisons(first stage)</span>
+                    <span>SVG Animation Comparisons1</span>
                     </a>
                 </span>
 
                 <span class="link-block">
                   <a href="#svg_comparisons2"
                      class="nav-link button-55 is-normal">
-                    <span>SVG Animation Comparisons(second stage)</span>
+                    <span>SVG Animation Comparisons2</span>
                     </a>
                 </span>
 
@@ -142,7 +142,7 @@
   </div>
 </section>
 
-<!-- How does it work? -->
+<!-- Method -->
 <section class="section">
   <div class="container is-widescreen" id="pipeline">
     <div class="link-block ">
@@ -152,13 +152,13 @@
         </a>
     </div>
     <div class="section-title has-text-centered is-centered">
-      <h2 class="title is-3">How dose it work?</h2><br>
+      <h2 class="title is-3">Method</h2><br>
     </div>
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
       <img id="rep" src="static/images/method/pipeline.png"/>
       <div class="content has-text-justified">
-        VecVideo is an optimization-based model to generate text-guided SVG animation. It decomposes the generation process into two tasks: motion prediction and color prediction. For motion prediction, this approach use a FPS to sample a set of sparse control points and predict their motion. We then compute the motion of other points by their neighboring sparse control points. For color predict, we predict the color attribute for each path. Finally, we use a pre-trained text-to-video model to optimize both stages.
+        VecVideo is an optimization-based model to generate text-guided SVG animation. It decomposes the generation process into two stages: motion prediction and color prediction. For motion prediction, this approach use a FPS to sample a set of sparse control points and predict their motion. It then computes the motion of other points by their neighboring sparse control points. For color predict, It predicts a color attribute for each path. Finally, a pre-trained text-to-video model is be used to optimize both stages.
       </div>
     </div>
   </div>
@@ -201,7 +201,7 @@
             <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/3.png" alt="airplane"/>
             <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/3.gif" alt="airplane"/>
           </div>
-          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="The airplane moves swiftly and steadily through the air." title="">The airplane moves swiftly and steadily [..]</h6>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="The airplane moves swiftly and steadily through the air." title="">The airplane moves swiftly [..]</h6>
         </div>
       
         <div class="captioned_video">
@@ -209,7 +209,7 @@
             <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/4.png" alt="balloon"/>
             <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/4.gif" alt="balloon"/>
           </div>
-          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="A hot air balloon rising in the sky." title="">A hot air balloon rising in the sky.</h6>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="A hot air balloon rising in the sky." title="">A hot air balloon rising in  [..]</h6>
         </div>
 
         <div class="captioned_video">
@@ -217,7 +217,7 @@
             <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/5.png" alt="ship"/>
             <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/5.gif" alt="ship"/>
           </div>
-          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="A ship moves swiftly and steadily on the sea." title="">A ship moves swiftly and steadily on the sea.</h6>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="A ship moves swiftly and steadily on the sea." title="">A ship moves swiftly and  [..]</h6>
         </div>
 
         <div class="captioned_video">
@@ -233,7 +233,7 @@
             <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/7.png" alt="fish"/>
             <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/7.gif" alt="fish"/>
           </div>
-          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="The fish is gracefully moving through the water, its fins and tail fin gently propelling it forward with effortless agility." title="">The fish is gracefully moving through [..]</h6>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="The fish is gracefully moving through the water, its fins and tail fin gently propelling it forward with effortless agility." title="">The fish is gracefully moving [..]</h6>
         </div>
 
         <div class="captioned_video">
@@ -241,7 +241,7 @@
             <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/8.png" alt="spaceship"/>
             <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/8.gif" alt="spaceship"/>
           </div>
-          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="The spaceship accelerates rapidly during takeoff, utilizing powerful rocket engines." title="">The spaceship accelerates rapidly [..]</h6>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="The spaceship accelerates rapidly during takeoff, utilizing powerful rocket engines." title="">The spaceship accelerates [..]</h6>
         </div>
 
         <div class="captioned_video">
@@ -249,7 +249,7 @@
             <img class="gallery_img over grid_r_1 grid_c_1" src="static/images/color_pngs/9.png" alt="medusa"/>
             <img class="gallery_img under grid_r_1 grid_c_1" src="static/images/NFSD_gif/9.gif" alt="medusa"/>
           </div>
-          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="The medusa is gracefully moving through the water, its tentacles swinging briskly." title="">The medusa is gracefully moving [..]</h6>
+          <h6 class="caption has-tooltip-multiline has-tooltip-bottom" data-tooltip="The medusa is gracefully moving through the water, its tentacles swinging briskly." title="">The medusa is gracefully [..]</h6>
         </div>
 
         <div class="captioned_video">
@@ -276,10 +276,10 @@
         </a>
     </div>
     <div class="section-title has-text-centered is-centered">
-      <h2 class="title is-3">SVG Animation Comparisons(first stage)</h2><br>
+      <h2 class="title is-3">SVG Animation Comparisons1</h2><br>
     </div>
     <div class="section is-centered has-text-centered">
-      We evaluate the results from the first stage of our method with Live-Sketch.
+      In this section, we evaluate the results from the first stage of our method with Live-Sketch.
       Live-Sketch relies on a global transformation matrix to generate the primary motion, which often results in both the background and the main subject moving together in the generated videos.
       However, our method effectively overcomes this limitation by employing sparse control points, ensuring smoother and more natural motion. 
       Below we provide the videos used in our quantitative experiement.
@@ -471,10 +471,11 @@
         </a>
     </div>
     <div class="section-title has-text-centered is-centered">
-      <h2 class="title is-3">SVG Animation Comparisons(second stage)</h2><br>
+      <h2 class="title is-3">SVG Animation Comparisons2</h2><br>
     </div>
     <div class="section is-centered has-text-centered">
-      For the second part, SVD, VideoCrafter2, and DynamiCrafter256 struggle to maintain the appearance of the main subject during the process.
+      In this section, we evaluate the results from the full two-stage of our method with SVD, VideoCrafter2, DynamiCrafter256, and DynamiCrafter512.
+      SVD, VideoCrafter2, and DynamiCrafter256 struggle to maintain the appearance of the main subject during the process.
       Although DynamiCrafter512 effectively preserves the appearance of the main subject, its motion is limited, often only involving minimal translation.
       In contrast, our method achieves a balance between image consistency and motion quality.
       Below we provide the videos used in our quantitative experiement.
@@ -749,12 +750,11 @@
       <h2 class="title is-3">Sketch Animation Comparision</h2><br>
     </div>
     <div class="section is-centered has-text-centered">
-      For sketch animation, we mainly compare our method with the previous sketch-to-video method, Live-Sketch. 
-      Additionally, we incorporate comparisons with recent video generation approaches:
-      (1) SVD is an image-to-video model that takes an image and generates the corresponding video content.
-      (2) VideoCrafter2, a video generation model conditioned on images and text prompts. 
-      (3) DynamiCrafter, a model for high-quality video generation, also conditioned on images and text prompts. 
-      Below we provide the videos used in our quantitative experiement.
+      In this section, we compare our method with the previous sketch-to-video method, Live-Sketch. 
+      Additionally, we incorporate comparisons with recent video generation approaches: SVD, VideoCrafter2, DynamiCrafter256, and DynamiCrafter512. 
+      Below we provide the videos in our quantitative experiment, including those of Live-Sketch and our method.
+      Live-Sketch still falls short in terms of appearance preservation, resulting in noticeable shape deviations.
+      In contrast, our method not only preserves object shapes with greater fidelity but also generates smoother motion.
     </div>
     
     <div id="results-carousel" class="carousel results-carousel">
@@ -1244,7 +1244,7 @@
     <div class="columns is-centered has-text-centered">
       <div class="comparisons_gallery" style="display: flex; justify-content: center; align-items: center; gap: 16px;">
         <div class="captioned_video">
-          <img class="comp_src_img" src="sstatic/images/sketch_pngs/29.png" alt="111"/>
+          <img class="comp_src_img" src="static/images/sketch_pngs/29.png" alt="111"/>
           <h6 class="caption">Input</h6>
         </div>
         <div class="captioned_video">
@@ -1293,7 +1293,7 @@
       <h2 class="title is-3">Ablation</h2><br>
     </div>
     <div class="section is-centered has-text-centered">
-      We validate our components through an ablation study in sketch animation, focusing on the SC-Vector and the CFC Loss.
+      In this section, we validate our components through an ablation study in sketch animation, focusing on the SC-Vector and the CFC Loss.
       Below we provide the videos used in our quantitative experiement.
     </div>
     
