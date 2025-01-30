@@ -158,7 +158,7 @@
       <div class="column is-four-fifths">
       <img id="rep" src="static/images/method/pipeline.png"/>
       <div class="content has-text-justified">
-        VecVideo is an optimization-based model to generate text-guided SVG animation. It decomposes the generation process into two stages: motion prediction and color prediction. For motion prediction, this approach use a FPS to sample a set of sparse control points and predict their motion. It then computes the motion of other points by their neighboring sparse control points. For color predict, It predicts a color attribute for each path. Finally, a pre-trained text-to-video model is be used to optimize both stages.
+        VecVideo generates text-guided SVG animations by dividing the process into two stages: motion prediction and color prediction. First, motion is predicted for a subset of control points and propagated to others, with cross-frame consistency ensuring smooth transitions. Then, color attributes are adjusted to enhance realism. A pre-trained text-to-video diffusion model guides both stages, ensuring alignment with the textual prompt.
       </div>
     </div>
   </div>
